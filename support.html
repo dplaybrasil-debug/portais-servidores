@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Ajuda - Central dos Servidores</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Shared Hub Styles */
+        body {
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 20px;
+        }
+
+        .hub-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            max-width: 95vw;
+            width: 100%;
+            padding-bottom: 50px;
+        }
+
+        /* Hero Text */
+        .help-hero {
+            margin-top: 40px;
+            margin-bottom: 60px;
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hub-title {
+            font-family: 'Rajdhani', sans-serif;
+            /* Tech look */
+            font-size: 3.5rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .quote-box {
+            position: relative;
+            padding-left: 20px;
+            text-align: left;
+            border-left: 4px solid #8257E5;
+            /* Purple accent */
+            max-width: 650px;
+        }
+
+        .quote-text {
+            color: #ccc;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        /* Grid */
+        .support-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Cards */
+        .support-card {
+            background: #0D0F16;
+            /* Deep dark bg */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .support-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Glare effect on hover */
+        .support-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .support-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Card Content */
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .card-desc {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95rem;
+            color: #888;
+            margin-bottom: 30px;
+            line-height: 1.4;
+            flex-grow: 1;
+            /* Push button down */
+        }
+
+        /* Buttons */
+        .card-btn {
+            width: 100%;
+            padding: 12px 0;
+            border-radius: 50px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Specific Card Styles */
+
+        /* WhatsApp (Green) */
+        .card-whatsapp .card-icon {
+            color: #25D366;
+        }
+
+        .card-whatsapp:hover {
+            border-color: #25D366;
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.15);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: #000;
+            border: none;
+        }
+
+        .btn-whatsapp:hover {
+            background: #1ebc57;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Telegram (Blue) */
+        .card-telegram .card-icon {
+            color: #0088cc;
+        }
+
+        .card-telegram:hover {
+            border-color: #0088cc;
+            box-shadow: 0 0 30px rgba(0, 136, 204, 0.15);
+        }
+
+        .btn-telegram {
+            background: #0088cc;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-telegram:hover {
+            background: #0077b5;
+            box-shadow: 0 0 20px rgba(0, 136, 204, 0.4);
+        }
+
+        /* Official Channel (Purple) */
+        .card-channel .card-icon {
+            color: #8257E5;
+        }
+
+        .card-channel:hover {
+            border-color: #8257E5;
+            box-shadow: 0 0 30px rgba(130, 87, 229, 0.15);
+        }
+
+        .btn-channel {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-channel:hover {
+            border-color: #8257E5;
+            background: rgba(130, 87, 229, 0.1);
+            color: #8257E5;
+        }
+
+
+        .navbar {
+            width: 100%;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation Menu -->
+    <nav class="navbar">
+        <div class="nav-logo">
+        </div>
+
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+
+
+            <li class="nav-item"><a href="partners.html"><i class="fas fa-handshake"></i> Parceiros</a></li>
+            <li class="nav-item active"><a href="support.html"><i class="fas fa-headset"></i> Apoio</a></li>
+        </ul>
+    </nav>
+
+    <div class="hub-container">
+
+        <div class="help-hero">
+            <h1 class="hub-title">CENTRAL DE AJUDA</h1>
+
+        </div>
+
+        <div class="support-grid">
+
+            <!-- WhatsApp Card -->
+            <div class="support-card card-whatsapp">
+                <i class="fab fa-whatsapp card-icon"></i>
+                <h2 class="card-title">SUPORTE RÁPIDO</h2>
+                <p class="card-desc">Fale com um atendente agora mesmo. Tire dúvidas, renove planos ou peça ajuda
+                    técnica.</p>
+                <a href="https://wa.me/5516991004498" target="_blank" class="card-btn btn-whatsapp">
+                    INICIAR CONVERSA <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Telegram Card -->
+            <div class="support-card card-telegram">
+                <i class="fab fa-telegram-plane card-icon"></i>
+                <h2 class="card-title">TELEGRAM VIP</h2>
+                <p class="card-desc">Prefere a privacidade do Telegram? Nosso suporte também está online por lá.</p>
+                <a href="#" onclick="alert('Link do Telegram será configurado em breve!'); return false;"
+                    class="card-btn btn-telegram">
+                    CHAMAR NO TELEGRAM
+                </a>
+            </div>
+
+            <!-- Official Channel Card -->
+            <div class="support-card card-channel">
+                <i class="fas fa-bullhorn card-icon"></i>
+                <h2 class="card-title">CANAL OFICIAL</h2>
+                <p class="card-desc">Entre no nosso grupo e receba atualizações sobre manutenções, novidades e ofertas.
+                </p>
+                <a href="#" onclick="alert('Link do Grupo será configurado em breve!'); return false;"
+                    class="card-btn btn-channel">
+                    ENTRAR NO GRUPO
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

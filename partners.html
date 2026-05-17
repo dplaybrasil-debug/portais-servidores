@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicativos Parceiros - Central dos Servidores</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Shared Hub Styles */
+        body {
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 20px;
+        }
+
+        .hub-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            max-width: 95vw;
+            width: 100%;
+            padding-bottom: 50px;
+        }
+
+        .hub-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 3rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            margin-bottom: 30px;
+            margin-top: 20px;
+        }
+
+        .partners-grid-page {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 95vw;
+        }
+
+        .partner-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 8px;
+            width: 130px;
+            height: 130px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            /* backdrop-filter removido: cria contexto de composição isolado
+               que impede a renderização correta das logos */
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--cyan-mid);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Cards whose logos have a dark/black background — give them a white fill */
+        .partner-card.dark-bg-logo {
+            background: #ffffff;
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .partner-card.dark-bg-logo:hover {
+            background: #f0f0f0;
+        }
+
+        .partner-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+        }
+
+        .partner-name {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: white;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+            /* Hide name for cleaner look if logo exists, or show on error */
+        }
+
+        .navbar {
+            width: 100%;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation Menu -->
+    <nav class="navbar">
+        <div class="nav-logo">
+        </div>
+
+        <!-- Search Bar in Navbar -->
+        <div class="nav-search-container" style="margin: 0 20px;">
+            <input type="text" id="partnerSearch" placeholder="Pesquisar parceiro..."
+                                onkeyup="handlePartnerSearch(this.value)"
+                style="padding: 10px 15px; border-radius: 20px; border: none; outline: none; background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255, 255, 255, 0.2); width: 250px;">
+            <i class="fas fa-search search-icon" style="color: white; margin-left: -30px; pointer-events: none;"></i>
+        </div>
+
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+            <li class="nav-item active"><a href="partners.html"><i class="fas fa-handshake"></i> Parceiros</a></li>
+            <li class="nav-item"><a href="support.html"><i class="fas fa-headset"></i> Apoio</a></li>
+            
+        </ul>
+    </nav>
+
+    <div class="hub-container">
+        <h1 class="hub-title">Aplicativos Parceiros</h1>
+
+        <!-- Dynamic Grid -->
+        <div class="partners-grid-page" id="partnersGrid">
+            <!-- Cards will be injected here by JS -->
+        </div>
+    </div>
+
+    <!-- Carregamento do servers_data.js sem document.write block (fix online) -->
+    <script src="servers_data.js"></script>
+    <script>
+        const grid = document.getElementById('partnersGrid');
+
+        function handlePartnerSearch(query) {
+            const queryLower = query.toLowerCase();
+            const cards = document.querySelectorAll('.partner-card');
+
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase();
+                if (name.includes(queryLower)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Reuse mapping from script.js (manually copied/maintained)
+        // Ideally this should be in a shared config file.
+        const partnerLogos = {
+            "ASSIST PLUS":      "ASSIST PLUS.png",
+            "BIG PLAYER":       "BIG PLAYER.png",
+            "BLESSED PLAYER":   "BLESSED PLAYER.png",
+            "BRASIL IPTV":      "BRASIL IPTV.png",
+            "BeesTV":           "HibridoTV.png",
+            "CLOUD":            "cloud.png",
+            "CORE PLAYER":      "Core Player.png",
+            "DREAM TV":         "DREAM TV.png",
+            "EASY PLAYER":      "EASY PLAYER.png",
+            "EPIC PLAY":        "EPIC PLAY.png",
+            "FLEXPLAY":         "FLEXPLAY.png",
+            "FUN PLAY":         "FUN PLAY.jpeg",
+            "HD PLAYER":        "HD PLAYER.png",
+            "HibridoTV":        "HibridoTV.png",
+            "I-PLAYER":         "IP-TV PLAYER.png",
+            "IPTV 4K":          "IPTV 4K.png",
+            "IPTV +":           "IPTV PLUS.png",
+            "IPTV PLUS":        "IPTV PLUS.png",
+            "IPTV PRO":         "IPTV PRO.png",
+            "IPTV PRO PLAYER":  "IPTV PRO PLAYER.png",
+            "IPTV Player io":   "IPTV Player io.png",
+            "IPTV STAR PLAYER": "STAR IPTV.jpg",
+            "K-PLAYER":         "KPLAY.png",
+            "LAZER PLAY":       "LAZER PLAY.png",
+            "LOTUS":            "lotus.png",
+            "MAGIC PLAYER":     "MAGIC PLAYER.jpeg",
+            "MAX PLAYER":       "MAX PLAYER.png",
+            "NATV":             "NATV.png",
+            "NETX IPTV":        "NETX IPTV.png",
+            "NEWONE":           "NEWONE.png",
+            "OTT PLAYER":       "OTT PLAYER.png",
+            "P2SPEED":          "P2SPEED.png",
+            "PLAY BOX":         "PLAY BOX.png",
+            "PLAY SIM":         "PLAY SIM.png",
+            "PlayIPTV":         "PlayIPTV.png",
+            "POWER PIXEL":      "POWER PIXEL.png",
+            "POWER PLAY":       "POWER PLAY.png",
+            "PREMIUM IPTV":     "PREMIUM IPTV.png",
+            "PRIME IPTV":       "PRIME IPTV.png",
+            "PRO PLAYER":       "PRO PLAYER.png",
+            "QPLAY":            "QPLAY.png",
+            "QUICK PLAYER":     "Quick Player.jpg",
+            "QUICK PLAYER PRO": "QUICK PLAYER PRO.png",
+            "SEE PLAY":         "SEE PLAY.png",
+            "STAR IPTV":        "STAR IPTV.jpg",
+            "SUPER PLAY":       "SUPER PLAY.png",
+            "THUNDER OTT":      "THUNDER.png",
+            "TIVI PLAYER":      "TIVI PLAYER.jpeg",
+            "TV PLAY":          "TVS APP.png",
+            "TV VISON":         "VIZZION PLAY.png",
+            "TVS":              "TVS APP.png",
+            "ULTRA PLAYER":     "ULTRA PLAYER.png",
+            "UTM PRO":          "UTM PRO.png",
+            "VERTU PLAY":       "Vertu Play.png",
+            "VIZZION PLAY":     "VIZZION PLAY.png",
+            "WAPP":             "WAPP.png",
+            "WAPP TV":          "WAPP.png",
+            "XCLOUD":           "xcloud.png"
+        };
+
+        // Static partners that should always appear even if not tied to a server
+        const staticPartners = ["BeesTV", "EPIC PLAY", "P2SPEED", "SUPER PLAY", "THUNDER OTT", "TVS", "POWER PIXEL"];
+
+        // Partners whose logos have a dark/black background — need a white card bg to be visible
+        const darkBgPartners = new Set([
+            "DREAM TV",
+            "TIVI PLAYER",
+            "TIVIPLAYER IPTV",
+            "TiviPlayer IPTV",
+            "STAR IPTV",
+            "IPTV STAR",
+            "IPTV STAR PLAYER",
+            "FUN PLAY",
+            "MAGIC PLAYER",
+            "QUICK PLAYER",
+            "QUICK PLAYER PRO"
+        ]);
+
+        // Extract Unique Partners from servers
+        const uniquePartners = new Set(staticPartners);
+        Object.values(servers).forEach(server => {
+            if (server.partners) {
+                server.partners.forEach(p => uniquePartners.add(p));
+            }
+        });
+
+        // Convert to array and sort
+        const sortedPartners = Array.from(uniquePartners).sort();
+
+        sortedPartners.forEach(partnerName => {
+            // Determine Logo File
+            const filename = partnerLogos[partnerName] || `${partnerName}.png`;
+
+            const card = document.createElement('a');
+            card.href = `index.html?partner=${encodeURIComponent(partnerName)}`;
+            card.className = 'partner-card' + (darkBgPartners.has(partnerName) ? ' dark-bg-logo' : '');
+            card.setAttribute('data-name', partnerName);
+
+            const img = document.createElement('img');
+            const tstamp = new Date().getTime();
+            img.src = `assets/logos/${filename}?v=` + tstamp;
+            img.alt = partnerName;
+            img.className = 'partner-logo-img';
+            // Removido lazy loading - causava logos não renderizarem
+
+            // Error handling trying multiple extensions
+            img.onerror = function () {
+                if (!this.dataset.triedJpg) {
+                    this.dataset.triedJpg = 'true';
+                    this.src = \`assets/logos/\${partnerName}.jpg\`;
+                } else if (!this.dataset.triedJpeg) {
+                    this.dataset.triedJpeg = 'true';
+                    this.src = \`assets/logos/\${partnerName}.jpeg\`;
+                } else {
+                    this.style.display = 'none';
+                    const text = document.createElement('div');
+                    text.className = 'partner-name';
+                    text.textContent = partnerName;
+                    text.style.display = 'block';
+                    text.style.color = '#fff';
+                    text.style.fontSize = '1.2rem';
+                    card.appendChild(text);
+                    console.warn('Missing logo for partner:', partnerName);
+                }
+            };
+
+            card.appendChild(img);
+            grid.appendChild(card);
+        });
+
+    </script>
+
+</body>
+
+</html>

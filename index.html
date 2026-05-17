@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela Central dos Servidores - Início</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Specific Hub Styles */
+        body {
+            /* Keep same background but ensure it looks good as a hub */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hub-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+            max-width: 95vw;
+            /* Wider for more items */
+            width: 100%;
+        }
+
+        .hub-title {
+            font-family: 'Anton', sans-serif;
+            font-size: 4rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+            margin-bottom: 20px;
+            display: none;
+            /* Hide H1 since logo is prominent, or keep it? User said 'change name'. Let's keep distinct or remove if redundant. Let's keep it matching the logo text */
+        }
+
+        .main-central-logo {
+            max-width: 600px;
+            width: 90%;
+            height: auto;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.5));
+            animation: pulseLogo 3s infinite alternate;
+            /* mix-blend-mode: screen REMOVIDO - fundo já é transparente */
+        }
+
+        @keyframes pulseLogo {
+            from {
+                filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.4));
+                transform: scale(1);
+            }
+
+            to {
+                filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.8));
+                transform: scale(1.02);
+            }
+        }
+
+        .servers-grid {
+            display: flex;
+            /* Flex instead of grid for centering row */
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            /* Tighter gap */
+            width: 100%;
+        }
+
+        .server-card {
+            position: relative;
+            background: rgba(10, 18, 40, 0.75);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 2px;
+            width: 125px;
+            height: 125px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            /* backdrop-filter removed: it creates an isolated compositing context
+               that breaks mix-blend-mode: screen on child .server-logo images */
+        }
+
+
+
+        .server-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            right: auto;
+            width: max-content;
+            background: linear-gradient(45deg, #ff0000, #ff0000);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.6);
+            z-index: 10;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 2px solid rgba(255, 255, 255, 1);
+            animation: pulseBadge 2s infinite;
+        }
+
+        @keyframes pulseBadge {
+            0% {
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+            }
+
+            70% {
+                transform: translateX(-50%) scale(1.05);
+                box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+            }
+
+            100% {
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+            }
+        }
+
+
+
+        .server-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(20, 35, 70, 0.9);
+            border-color: var(--cyan-mid);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .server-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 11, 28, 0.95);
+            border-radius: 13px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+            z-index: 20;
+            pointer-events: none;
+            /* Let clicks pass through to card */
+        }
+
+        .server-card:hover .server-overlay {
+            opacity: 1;
+        }
+
+        .overlay-text {
+            color: #fff;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        .overlay-highlight {
+            color: #00ff88;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+        }
+
+        .overlay-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 0.85rem;
+            color: #fff;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .overlay-stats div {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            /* Align left but centered in parent context effectively */
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .overlay-stats i {
+            color: var(--cyan-mid);
+            width: 16px;
+            /* Fixed width for alignment */
+            text-align: center;
+        }
+
+        .server-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+            /* mix-blend-mode: screen REMOVIDO - logos já têm fundo transparente,
+               o blend mode tornava logos claras/brancas invisíveis */
+        }
+
+        .server-name {
+            margin-top: 15px;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 700;
+            display: none;
+            /* Hide name if logo is sufficient, or show it */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation Menu -->
+    <nav class="navbar">
+        <div class="nav-logo">
+        </div>
+
+        <!-- Search Bar in Navbar -->
+        <div class="nav-search-container">
+            <input type="text" id="serverSearch" placeholder="Pesquisar..." onkeyup="handleSearch(this.value)">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <ul class="nav-links">
+            <li class="nav-item"><a href="#" onclick="filterServers('all'); return false;"><i class="fas fa-home"></i>
+                    Início</a></li>
+
+
+            <li class="nav-item"><a href="partners.html"><i class="fas fa-handshake"></i> Parceiros</a></li>
+            <li class="nav-item"><a href="partners-manager.html"><i class="fas fa-users-cog"></i> Gerenciar</a></li>
+            <li class="nav-item"><a href="support.html"><i class="fas fa-headset"></i> Apoio</a></li>
+            
+        </ul>
+    </nav>
+
+    <div class="hub-container">
+        <!-- Replaced Text Title with Big Logo for Hub -->
+
+        <!-- Search Results Count -->
+        <div id="searchResultsCount" class="search-results-count"></div>
+
+        <!-- Dynamic Grid -->
+        <div class="servers-grid" id="serversGrid">
+            <!-- Cards will be injected here by JS -->
+        </div>
+    </div>
+
+    <!-- Carregamento do servers_data.js -->
+    <script src="servers_data.js"></script>
+
+    <script>
+        const grid = document.getElementById('serversGrid');
+        const countEl = document.getElementById('searchResultsCount');
+        let currentCategory = 'all'; // Track active category
+
+        // Convert to array and sort alphabetically by Name
+        const sortedServers = Object.keys(servers)
+            .map(key => ({ id: key, ...servers[key] }))
+            .sort((a, b) => a.name.localeCompare(b.name));
+
+        function handleSearch(query) {
+            const lowerQuery = query.toLowerCase();
+
+            // Filter based on Name OR Partners
+            const filtered = sortedServers.filter(server => {
+                const matchesName = server.name.toLowerCase().includes(lowerQuery);
+                const matchesPartner = server.partners && server.partners.some(p => p.toLowerCase().includes(lowerQuery));
+                const matchesBadge = server.badge && server.badge.toLowerCase().includes(lowerQuery);
+                const matchesCategory = server.categories && server.categories.some(c => c.toLowerCase().includes(lowerQuery));
+
+                // Specific check for "telas" to show multi-screen servers
+                if (lowerQuery.includes('telas') && (server.badge && server.badge.toLowerCase().includes('telas'))) {
+                    return true;
+                }
+
+                return matchesName || matchesPartner || matchesBadge || matchesCategory;
+            });
+
+            // If query is empty, revert to current category view
+            if (!query) {
+                renderGrid(currentCategory);
+            } else {
+                // Show count
+                if (filtered.length > 0) {
+                    countEl.textContent = `${filtered.length} SERVIDOR(ES) ENCONTRADO(S)`;
+                    countEl.style.color = '#00d4ff'; // Cyan success
+                } else {
+                    countEl.textContent = `NENHUM SERVIDOR ENCONTRADO`;
+                    countEl.style.color = '#ff4d4d'; // Red error
+                }
+                countEl.style.display = 'block';
+
+                renderFilteredList(filtered);
+            }
+        }
+
+        function renderFilteredList(list) {
+            grid.innerHTML = '';
+            grid.classList.remove('fixed-grid'); // Search results usually don't adhere to fixed grid constraints
+
+            if (list.length === 0) {
+                // Optional: keep grid empty or show visual empty state, currently handled by countEl above
+                return;
+            }
+
+            list.forEach(server => {
+                createCard(server);
+            });
+        }
+
+        function createCard(server) {
+            const card = document.createElement('a');
+            card.href = `server.html?id=${server.id}`;
+            card.className = 'server-card';
+
+            const img = document.createElement('img');
+            img.src = server.logo;
+            img.alt = server.name;
+            img.className = 'server-logo';
+            // Removido lazy loading - causava logos não renderizarem
+            img.onerror = function() {
+                // Se a logo falhar, mostrar o nome do servidor como fallback
+                this.style.display = 'none';
+                const fallback = document.createElement('div');
+                fallback.style.cssText = 'color: #fff; font-size: 0.9rem; font-weight: 700; text-align: center; padding: 10px; text-transform: uppercase; word-break: break-word;';
+                fallback.textContent = server.name;
+                card.appendChild(fallback);
+                console.warn('Logo faltando:', server.logo);
+            };
+
+            const name = document.createElement('div');
+            name.className = 'server-name';
+            name.textContent = server.name;
+
+            if (server.badge) {
+                const badge = document.createElement('div');
+                badge.className = 'server-badge';
+                badge.textContent = server.badge;
+                card.appendChild(badge);
+            }
+
+            // Check for content stats or hover text
+            // const hasStats = server.channels_count || server.movies_count || server.series_count;
+
+            if (server.hoverText) {
+                const overlay = document.createElement('div');
+                overlay.className = 'server-overlay';
+
+                let contentHTML = '';
+                if (server.badge) {
+                    contentHTML += `<div class="overlay-highlight">${server.badge}</div>`;
+                }
+
+                if (server.hoverText) {
+                    contentHTML += `<div class="overlay-text">${server.hoverText}</div>`;
+                }
+
+                // Removed stats display as requested
+                /*
+                if (hasStats) {
+                    contentHTML += `<div class="overlay-stats">`;
+                    if (server.channels_count) contentHTML += `<div><i class="fas fa-tv"></i> ${server.channels_count}</div>`;
+                    if (server.movies_count) contentHTML += `<div><i class="fas fa-film"></i> ${server.movies_count}</div>`;
+                    if (server.series_count) contentHTML += `<div><i class="fas fa-video"></i> ${server.series_count}</div>`;
+                    contentHTML += `</div>`;
+                }
+                */
+
+                overlay.innerHTML = contentHTML;
+                card.appendChild(overlay);
+            }
+
+            card.appendChild(img);
+            card.appendChild(name);
+
+            grid.appendChild(card);
+        }
+
+        function renderGrid(filterCategory = 'all') {
+            currentCategory = filterCategory; // Update global tracker
+            grid.innerHTML = '';
+
+            // Reset search input if navigating categories
+            const searchInput = document.getElementById('serverSearch');
+            if (searchInput && searchInput.value !== '') searchInput.value = '';
+
+            let filtered;
+
+            // Handle filters with specific 4x2 layout (limited to 8 items)
+            if (filterCategory === 'coloridos') {
+                filtered = sortedServers.filter(s => s.categories && s.categories.includes('coloridos'));
+                grid.classList.add('fixed-grid');
+                grid.classList.remove('android-grid');
+            } else if (filterCategory === 'multitelas') {
+                filtered = sortedServers.filter(s => s.categories && s.categories.includes('multitelas')).slice(0, 12);
+                grid.classList.add('fixed-grid');
+            } else {
+                grid.classList.remove('fixed-grid');
+                filtered = filterCategory === 'all'
+                    ? sortedServers
+                    : sortedServers.filter(s => s.categories && s.categories.includes(filterCategory));
+            }
+
+            // Update Total Count Display
+            const staticPartnersList = ["BeesTV", "EPIC PLAY", "P2SPEED", "SUPER PLAY", "THUNDER OTT", "TVS"];
+            const allPartnersSet = new Set(staticPartnersList);
+            Object.values(servers).forEach(s => {
+                if (s.partners) s.partners.forEach(p => allPartnersSet.add(p));
+            });
+            const totalPartners = allPartnersSet.size;
+
+            if (filterCategory === 'all' && (!document.getElementById('serverSearch').value)) {
+                countEl.innerHTML = `TOTAL DE SERVIDORES: ${filtered.length} <span style="margin: 0 10px; opacity: 0.5;">|</span> APPS PARCEIRO: ${totalPartners}`;
+            } else {
+                countEl.textContent = `TOTAL DE SERVIDORES: ${filtered.length}`;
+            }
+
+            countEl.style.color = '#00d4ff';
+            countEl.style.display = 'block';
+
+            filtered.forEach(server => {
+                createCard(server);
+            });
+        }
+
+        // Expose filter function globally
+        window.filterServers = function (category) {
+            renderGrid(category);
+            document.getElementById('serversGrid').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        // Handle URL Params for Partner Filter
+        // Handle URL Params for Filter and Partner
+        const urlParams = new URLSearchParams(window.location.search);
+        const partnerFilter = urlParams.get('partner');
+        const categoryFilter = urlParams.get('filter');
+
+        if (partnerFilter) {
+            // Wait for initial render then filter
+            setTimeout(() => {
+                const searchInput = document.getElementById('serverSearch');
+                if (searchInput) {
+                    searchInput.value = partnerFilter;
+                    handleSearch(partnerFilter);
+                }
+            }, 100);
+        } else if (categoryFilter) {
+            // Handle category filter (e.g. from nav links on other pages)
+            setTimeout(() => {
+                filterServers(categoryFilter);
+            }, 100);
+        } else {
+            // Initial Render
+            renderGrid('all');
+        }
+    </script>
+
+</body>
+
+</html>

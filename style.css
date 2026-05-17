@@ -1,0 +1,1443 @@
+:root {
+
+    --bg-dark: #020b1c;
+
+    --cyan-light: #5ffbf1;
+
+    --cyan-mid: #00d4ff;
+
+    --cyan-dark: #0099cc;
+
+    --white: #ffffff;
+
+    --text-blue: #005a7d;
+
+}
+
+
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-family: 'Oswald', sans-serif;
+
+}
+
+
+
+body {
+
+    background-color: var(--bg-dark);
+
+    /* Image with dark overlay for readability */
+
+    background-image:
+
+        linear-gradient(rgba(2, 11, 28, 0.92), rgba(2, 11, 28, 0.88)),
+
+        url('assets/background.png');
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-attachment: fixed;
+
+    color: var(--white);
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    position: relative;
+
+    /* Ensure stacking context */
+
+}
+
+
+
+body::after {
+
+    content: "";
+
+    position: fixed;
+
+    top: -50%;
+
+    left: -50%;
+
+    width: 200%;
+
+    height: 200%;
+
+    background-image: url('assets/logo-central-v2.png');
+
+    background-repeat: repeat;
+
+    background-size: 300px;
+
+    opacity: 0.15;
+
+    z-index: 50;
+
+    pointer-events: none;
+
+    transform: rotate(-30deg);
+
+}
+
+
+
+body.no-watermark::after {
+
+    display: none;
+
+}
+
+
+
+
+
+
+
+
+
+/* --- Top Navbar --- */
+
+.navbar {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 90px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 0 40px;
+
+    background: transparent;
+
+    backdrop-filter: none;
+
+    z-index: 1000;
+
+    border-bottom: none;
+
+    box-shadow: none;
+
+}
+
+
+
+.nav-logo img {
+
+    height: 80px;
+
+    width: auto;
+
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.9));
+
+    transition: transform 0.3s ease;
+
+    /* mix-blend-mode: screen REMOVIDO - logos já têm fundo transparente */
+
+}
+
+
+
+.nav-logo img:hover {
+
+    transform: scale(1.05);
+
+    filter: drop-shadow(0 0 20px rgba(0, 212, 255, 1));
+
+}
+
+
+
+.nav-links {
+
+    display: flex;
+
+    gap: 30px;
+
+    list-style: none;
+
+    position: absolute;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+}
+
+
+
+.nav-item a {
+
+    text-decoration: none;
+
+    color: var(--white);
+
+    font-size: 1.1rem;
+
+    font-weight: 500;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    transition: all 0.3s ease;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+
+.nav-item a:hover,
+
+.nav-item.active a {
+
+    color: var(--cyan-mid);
+
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+
+    transform: translateY(-2px);
+
+}
+
+
+
+.nav-item i {
+
+    font-size: 1.2rem;
+
+}
+
+
+
+/* Adjust Main Container for Fixed Nav */
+
+.container,
+
+.hub-container {
+
+    margin-top: 100px;
+
+    /* Space for taller navbar */
+
+    padding-top: 20px;
+
+}
+
+
+
+/* --- Server Content Table --- */
+
+.main-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    width: 100%;
+
+    margin-bottom: 40px;
+
+    gap: 20px;
+
+}
+
+
+
+.header-left {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    /* Align table to left */
+
+}
+
+
+
+.header-right {
+
+    flex: 1;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    /* Align logo to right */
+
+    align-items: center;
+
+}
+
+
+
+.content-table-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    max-width: 600px;
+
+    /* Slightly wider */
+
+    margin: 0 auto 30px auto;
+
+    /* Center with bottom spacing */
+
+    font-family: 'Oswald', sans-serif;
+
+    gap: 8px;
+
+    /* Tighter spacing */
+
+}
+
+
+
+.content-table-header {
+
+    border: 2px solid white;
+
+    background-color: transparent;
+
+    /* Transparent */
+
+    color: #fff;
+
+    text-align: center;
+
+    font-size: 1.8rem;
+
+    font-weight: 700;
+
+    padding: 10px;
+
+    text-transform: none;
+
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+
+    /* Shadow for legibility */
+
+    margin-bottom: 10px;
+
+    /* Separate header from rows */
+
+}
+
+
+
+.content-row {
+
+    display: flex;
+
+    gap: 8px;
+
+    width: 100%;
+
+}
+
+
+
+/* Shared grid class for Coloridos and Multi Telas */
+
+.servers-grid.fixed-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    justify-items: center;
+
+    max-width: 800px;
+
+    /* Constrain width to keep it tight */
+
+    margin: 0 auto;
+
+}
+
+
+
+.content-label,
+
+.content-value {
+
+    flex: 1;
+
+    border: 2px solid white;
+
+    background-color: transparent;
+
+    /* Transparent */
+
+    color: white;
+
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    text-align: center;
+
+    padding: 10px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+
+}
+
+
+
+.content-label {
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    display: flex;
+
+    /* Flex to align icon */
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    /* Space between icon and text */
+
+}
+
+
+
+.content-label i {
+
+    color: var(--cyan-mid);
+
+    /* Icon color */
+
+    font-size: 1.2em;
+
+}
+
+
+
+.content-value {
+
+    font-family: 'Anton', sans-serif;
+
+}
+
+
+
+.table-separator {
+
+    width: 60%;
+
+    height: 1px;
+
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+
+    margin: 15px auto;
+
+    /* Center horizontally with spacing */
+
+}
+
+
+
+.timestamp-display {
+
+    color: rgba(255, 255, 255, 0.6);
+
+    /* Slightly dimmer */
+
+    margin-bottom: 0;
+
+    font-size: 1rem;
+
+    /* Smaller font for meta-info */
+
+    font-weight: 300;
+
+    font-family: 'Oswald', sans-serif;
+
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+
+    width: 100%;
+
+    text-align: center;
+
+    /* Force center */
+
+    letter-spacing: 1px;
+
+}
+
+
+
+/* --- Pricing Grid --- */
+
+.pricing-grid {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    /* Two columns */
+
+    gap: 20px 30px;
+
+    width: 100%;
+
+    margin-bottom: 40px;
+
+}
+
+
+
+.pill {
+
+    display: flex;
+
+    height: 90px;
+
+    border-radius: 50px;
+
+    /* Fully rounded capsule */
+
+    overflow: hidden;
+
+    position: relative;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+
+    transition: transform 0.2s;
+
+}
+
+
+
+.pill:hover {
+
+    transform: scale(1.02);
+
+}
+
+
+
+/* Left side of Pill (Quantity) */
+
+.pill-left {
+
+    flex: 6;
+
+    background: linear-gradient(180deg, var(--cyan-light) 0%, var(--cyan-mid) 40%, var(--cyan-dark) 100%);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    color: var(--white);
+
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+
+    /* Ensure text alignment */
+
+    text-align: center;
+
+    padding: 0 10px;
+
+}
+
+
+
+.qty-range {
+
+    font-family: 'Anton', sans-serif;
+
+    font-size: 2.8rem;
+
+    line-height: 1;
+
+    letter-spacing: 1px;
+
+}
+
+
+
+.qty-range.long-text {
+
+    font-size: 2.1rem;
+
+}
+
+
+
+.qty-label {
+
+    font-size: 1.2rem;
+
+    font-weight: 500;
+
+    letter-spacing: 1px;
+
+    margin-top: 5px;
+
+    text-transform: uppercase;
+
+}
+
+
+
+/* Right side of Pill (Price) */
+
+.pill-right {
+
+    flex: 4;
+
+    background: var(--white);
+
+    color: var(--text-blue);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    position: relative;
+
+    padding: 0 10px;
+
+}
+
+
+
+/* Container for price group to keep it centered as a block */
+
+.price-group {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    /* Align bottom baseline */
+
+    justify-content: center;
+
+    position: relative;
+
+}
+
+
+
+.currency {
+
+    font-size: 1.1rem;
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+
+    /* Lift up slightly */
+
+    margin-right: 4px;
+
+}
+
+
+
+.price-value {
+
+    font-family: 'Anton', sans-serif;
+
+    font-size: 3.5rem;
+
+    line-height: 0.9;
+
+    color: #007ea7;
+
+    margin-bottom: -5px;
+
+    /* Visual fix */
+
+}
+
+
+
+.price-value.long-price {
+
+    font-size: 1.8rem;
+
+    line-height: 1.2;
+
+    margin-bottom: 0;
+
+}
+
+
+
+.unit {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-left: 5px;
+    margin-bottom: 8px;
+    /* Align with currency roughly */
+    color: #007ea7;
+    position: static;
+    /* Remove absolute positioning */
+}
+
+/* Special Negotiate Pill */
+.special-negotiate {
+    flex-direction: row;
+    /* Match normal pills direction roughly */
+}
+
+.negotiate-text {
+    font-family: 'Anton', sans-serif;
+    font-size: 2rem;
+    line-height: 1;
+    text-align: center;
+    color: #007ea7;
+    text-transform: uppercase;
+}
+
+/* --- Branding --- */
+.logo-container {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.main-brand-logo {
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.4));
+    transition: transform 0.3s ease;
+}
+
+.main-brand-logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 25px rgba(0, 212, 255, 0.6));
+}
+
+.extra-branding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.dply-mini-logo {
+    width: 200px;
+    height: auto;
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+
+.whatsapp-contact {
+    font-size: 2.2rem;
+    color: #25D366;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-shadow: 0 0 15px rgba(37, 211, 102, 0.6);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 30px;
+    border-radius: 50px;
+    border: 2px solid rgba(37, 211, 102, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.whatsapp-contact:hover {
+    transform: scale(1.05);
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-contact i {
+    font-size: 2.5rem;
+}
+
+
+
+/* --- Partners --- */
+
+.partners-section {
+
+    width: 100%;
+
+    text-align: center;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    padding-top: 20px;
+
+}
+
+
+
+.partners-title {
+
+    font-size: 1.5rem;
+
+    margin-bottom: 20px;
+
+    letter-spacing: 2px;
+
+}
+
+
+
+.partners-grid {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 30px;
+
+}
+
+
+
+
+
+
+
+.partner-logo {
+
+    width: 110px;
+
+    /* Increased size */
+
+    height: 110px;
+
+    /* Increased size */
+
+    object-fit: contain !important;
+
+    /* Prevent cutting off rectangular logos */
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    padding: 8px;
+
+    /* Add padding so logo doesn't touch the borders */
+
+    border: 2px solid rgba(255, 255, 255, 0.2);
+
+    transition: all 0.3s ease;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+
+
+.partner-logo:hover {
+
+    transform: translateY(-5px) scale(1.05);
+
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+
+}
+
+
+
+/* Specific Brand Colors */
+
+.partner-logo.green {
+
+    background: linear-gradient(135deg, #004d40, #00695c);
+
+    border-color: #4db6ac;
+
+    box-shadow: 0 0 10px rgba(0, 105, 92, 0.4);
+
+}
+
+
+
+.partner-logo.red {
+
+    background: linear-gradient(135deg, #b71c1c, #d32f2f);
+
+    border-color: #ffcdd2;
+
+    box-shadow: 0 0 10px rgba(211, 47, 47, 0.4);
+
+}
+
+
+
+.partner-logo.blue {
+
+    background: linear-gradient(135deg, #0d47a1, #1976d2);
+
+    border-color: #bbdefb;
+
+    box-shadow: 0 0 10px rgba(25, 118, 210, 0.4);
+
+}
+
+
+
+.partner-logo.cyan {
+
+    background: linear-gradient(135deg, #00838f, #00acc1);
+
+    border-color: #b2ebf2;
+
+    box-shadow: 0 0 10px rgba(0, 172, 193, 0.4);
+
+}
+
+
+
+.partner-logo.yellow {
+
+    background: linear-gradient(135deg, #f9a825, #fbc02d);
+
+    border-color: #fff9c4;
+
+    box-shadow: 0 0 10px rgba(251, 192, 45, 0.4);
+
+}
+
+
+
+.partner-logo.purple {
+
+    background: linear-gradient(135deg, #4a148c, #7b1fa2);
+
+    border-color: #e1bee7;
+
+    box-shadow: 0 0 10px rgba(123, 31, 162, 0.4);
+
+}
+
+
+
+.platform-icons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    font-size: 1.2rem;
+
+    opacity: 0.7;
+
+}
+
+
+
+/* Responsive */
+
+/* Responsive */
+
+@media (max-width: 850px) {
+
+    .main-header {
+
+        flex-direction: column-reverse;
+
+        /* Logo on top, Table below */
+
+        align-items: center;
+
+        text-align: center;
+
+    }
+
+
+
+    .header-left,
+
+    .header-right {
+
+        align-items: center;
+
+        justify-content: center;
+
+        width: 100%;
+
+    }
+
+
+
+    .content-table-container {
+
+        margin: 0 auto 20px auto;
+
+    }
+
+
+
+    .logo-container {
+
+        text-align: center;
+
+        /* Center logo on mobile */
+
+        margin-bottom: 20px;
+
+        width: 100%;
+
+    }
+
+
+
+    .timestamp-display {
+
+        text-align: center;
+
+        align-self: center;
+
+    }
+
+
+
+    .pricing-grid {
+
+        grid-template-columns: 1fr;
+
+        /* Single column on mobile */
+
+        max-width: 400px;
+
+    }
+
+
+
+    .brand-logo {
+
+        font-size: 4rem;
+
+    }
+
+}
+
+
+
+/* --- Admin / Interactive --- */
+
+.admin-btn {
+
+    display: none;
+
+    /* User requested to forget admin mode */
+
+    background: transparent;
+
+    border: none;
+
+    color: rgba(255, 255, 255, 0.3);
+
+    font-size: 1.5rem;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    padding: 10px;
+
+}
+
+
+
+.admin-btn:hover {
+
+    color: var(--cyan-mid);
+
+    transform: rotate(90deg);
+
+}
+
+
+
+.editable {
+
+    transition: all 0.3s ease;
+
+}
+
+
+
+.editing-active {
+
+    border: 1px dashed var(--cyan-mid) !important;
+
+    background-color: rgba(0, 212, 255, 0.1) !important;
+
+    cursor: text;
+
+    border-radius: 4px;
+
+    padding: 0 5px;
+
+    /* Add breathing room */
+
+}
+
+
+
+/* --- Search Bar (Navbar Integrated) --- */
+
+.nav-search-container {
+
+    position: relative;
+
+    width: 300px;
+
+    /* Compact width for navbar */
+
+    margin: 0 20px;
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+
+#serverSearch {
+
+    width: 100%;
+
+    padding: 10px 40px 10px 20px;
+
+    /* Vertical padding reduced */
+
+    border-radius: 50px;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    background: rgba(255, 255, 255, 0.1);
+
+    backdrop-filter: blur(5px);
+
+    color: white;
+
+    font-family: 'Oswald', sans-serif;
+
+    font-size: 1rem;
+
+    letter-spacing: 1px;
+
+    transition: all 0.3s ease;
+
+    outline: none;
+
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+#serverSearch::placeholder {
+
+    color: rgba(255, 255, 255, 0.6);
+
+    font-weight: 300;
+
+}
+
+
+
+#serverSearch:focus {
+
+    width: 350px;
+
+    /* Expand on focus */
+
+    border-color: #00d4ff;
+
+    background: rgba(0, 0, 0, 0.6);
+
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+
+}
+
+
+
+.search-icon {
+
+    position: absolute;
+
+    right: 15px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #fff;
+
+    font-size: 1rem;
+
+    pointer-events: none;
+
+    transition: all 0.3s ease;
+
+}
+
+
+
+#serverSearch:focus+.search-icon {
+
+    color: #00d4ff;
+
+}
+
+
+
+/* --- Search Results Count --- */
+
+.search-results-count {
+
+    width: 100%;
+
+    text-align: center;
+
+    color: var(--cyan-mid);
+
+    font-size: 1.5rem;
+
+    margin-bottom: 20px;
+
+    font-weight: 500;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+
+    display: none;
+
+    /* Hidden by default */
+
+    font-family: 'Oswald', sans-serif;
+
+    animation: fadeIn 0.3s ease;
+
+}
+
+
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(-10px);
+
+    }
+
+
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+
+
+/* --- Partner Logo Text Fallback --- */
+
+.partner-logo-text {
+
+    width: 110px;
+
+    height: 110px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 5px;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+
+    color: white;
+
+    font-weight: 700;
+
+    font-size: 0.8rem;
+
+    /* Smaller font to fit long names */
+
+    text-transform: uppercase;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+    overflow: hidden;
+
+    word-break: break-word;
+
+    transition: all 0.3s ease;
+
+}
+
+
+
+.partner-logo-text:hover {
+
+    transform: translateY(-5px) scale(1.05);
+
+    background: rgba(255, 255, 255, 0.2);
+
+    border-color: var(--cyan-mid);
+
+}
+
+/* Dropdown Menu Styles */
+.nav-item {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 220px;
+    background: rgba(2, 11, 28, 0.98);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 0;
+    z-index: 3000;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+/* Show on hover */
+.nav-item:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInDropdown 0.3s ease forwards;
+}
+
+@keyframes fadeInDropdown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-content a {
+    color: var(--white);
+    padding: 15px 25px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-content a:hover {
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--cyan-mid);
+    padding-left: 30px;
+}
+
+.dropdown-content i {
+    width: 25px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+/* Different colors for brands */
+.dropdown-content .fa-whatsapp { color: #25D366; }
+.dropdown-content .fa-telegram { color: #0088cc; }
+.dropdown-content .fa-envelope { color: #ffd700; }

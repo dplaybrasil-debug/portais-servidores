@@ -1,0 +1,85 @@
+# =============================================
+# Banco de Dados (dados sensíveis)
+# =============================================
+*.sqlite
+*.sqlite3
+*.db
+
+# =============================================
+# PHP binário local (pesado e específico da OS)
+# =============================================
+Servidores Info/php/
+php/
+
+# =============================================
+# Backups locais
+# =============================================
+backups/
+
+# =============================================
+# Scripts utilitários temporários de debug/fix
+# =============================================
+_audit_watermark.py
+audit_logos.py
+check_all_images.py
+check_data.py
+check_images.py
+check_links.py
+clean_logo.py
+cleanup.py
+count.py
+debug_servers.py
+deepcheck.py
+extract_colors.py
+find.py
+fix_cache_bust.py
+fix_encoding.py
+fix_init.py
+fix_load.py
+fix_manager.py
+fix_partners.py
+fix_script_load.py
+fix_servers_js.py
+insert_debug.py
+parse.py
+remove_admin.py
+remove_bg.py
+remove_bg_servidores.py
+verify.py
+wipe_admin.py
+wipe_cache.py
+wipe_cache_completely.py
+wrap.py
+banner.py
+server_manager.py
+temp_unused.js
+test.js
+test_minimal.html
+
+# =============================================
+# Arquivos temporários Python
+# =============================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# =============================================
+# Sistema operacional
+# =============================================
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# =============================================
+# Editores
+# =============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =============================================
+# Logs
+# =============================================
+*.log
