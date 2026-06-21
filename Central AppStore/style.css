@@ -1,0 +1,64 @@
+/* Reset básico */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-dark: #0d1117;
+    --bg-card: rgba(255,255,255,0.07);
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --text-primary: #f1f5f9;
+    --text-muted: #94a3b8;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.logo {font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.4rem; color: var(--accent);}
+.nav .nav-item {margin-left: 1.6rem; color: var(--text-muted); text-decoration: none; transition: color .2s;}
+.nav .nav-item:hover, .nav .nav-item.active {color: var(--text-primary);}
+
+.hero {text-align: center; padding: 5rem 2rem; background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #fff;}
+.hero-title {font-size: 2.8rem; margin-bottom: .8rem;}
+.hero-subtitle {font-size: 1.2rem; margin-bottom: 1.6rem; opacity: .9;}
+.hero-cta {display: inline-block; background: var(--accent); color: #fff; padding: .8rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 500; transition: background .2s, transform .2s;}
+.hero-cta:hover {background: var(--accent-hover); transform: translateY(-2px);}
+
+.section-title {font-size: 2rem; margin: 2rem 0 1.5rem; text-align: center; color: var(--accent);}
+
+.apps-grid {display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); max-width: 1200px; margin: 0 auto; padding: 0 1rem;}
+.app-card {background: var(--bg-card); border-radius: 16px; padding: 1.5rem; text-align: center; transition: transform .3s, box-shadow .3s;}
+.app-card:hover {transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,.4);}
+.app-img {width: 100%; max-width: 150px; margin-bottom: .8rem; border-radius: 12px;}
+.app-name {font-size: 1.2rem; margin-bottom: .4rem;}
+.app-desc {font-size: .9rem; color: var(--text-muted); margin-bottom: 1rem;}
+.app-cta {display: inline-block; background: var(--accent); color: #fff; padding: .5rem 1.2rem; border-radius: 8px; text-decoration: none; font-size: .9rem; transition: background .2s;}
+.app-cta:hover {background: var(--accent-hover);}
+
+.about-section, .contact-section {max-width: 800px; margin: 0 auto; padding: 2rem 1rem; text-align: center;}
+.about-text {font-size: 1rem; color: var(--text-muted);}
+
+.contact-form {display: flex; flex-direction: column; gap: .8rem; margin-top: 1rem;}
+.contact-form input, .contact-form textarea {padding: .8rem; border: 1px solid var(--text-muted); border-radius: 8px; background: rgba(255,255,255,0.03); color: var(--text-primary); font-family: inherit;}
+.contact-form button {background: var(--accent); color: #fff; border: none; padding: .8rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background .2s;}
+.contact-form button:hover {background: var(--accent-hover);}
+
+.footer {text-align: center; padding: 1.2rem; margin-top: 2rem; font-size: .85rem; color: var(--text-muted); background: rgba(255,255,255,0.04);}

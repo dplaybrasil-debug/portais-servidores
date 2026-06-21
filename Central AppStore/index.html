@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central AppStore – Sua loja de apps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Central AppStore</div>
+        <nav class="nav">
+            <a href="#" class="nav-item active">Início</a>
+            <a href="#apps" class="nav-item">Apps</a>
+            <a href="#sobre" class="nav-item">Sobre</a>
+            <a href="#contato" class="nav-item">Contato</a>
+        </nav>
+    </header>
+    <main class="main">
+        <section class="hero">
+            <h1 class="hero-title">Encontre os melhores aplicativos</h1>
+            <p class="hero-subtitle">A Central AppStore reúne apps selecionados, seguros e fáceis de instalar.</p>
+            <a href="#apps" class="hero-cta">Ver apps</a>
+        </section>
+        <section id="apps" class="apps-section">
+            <h2 class="section-title">Catálogo de Aplicativos</h2>
+            <div class="apps-grid" id="appsGrid"></div>
+        </section>
+        <section id="sobre" class="about-section">
+            <h2 class="section-title">Sobre a Central AppStore</h2>
+            <p class="about-text">
+                Central AppStore oferece um catálogo curado de aplicativos com avaliações, descrições e downloads seguros. Ideal para quem busca praticidade e qualidade.
+            </p>
+        </section>
+        <section id="contato" class="contact-section">
+            <h2 class="section-title">Fale conosco</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Nome" required>
+                <input type="email" placeholder="E‑mail" required>
+                <textarea placeholder="Mensagem" rows="4" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+    <footer class="footer">© 2026 Central AppStore – Todos os direitos reservados.</footer>
+    <script src="script.js"></script>
+</body>
+</html>

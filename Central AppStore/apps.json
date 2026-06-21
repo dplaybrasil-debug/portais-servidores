@@ -1,0 +1,17 @@
+[
+  {
+    "name": "App One",
+    "description": "Descrição curta e impactante do App One.",
+    "image": "https://via.placeholder.com/150?text=App+1"
+  },
+  {
+    "name": "App Two",
+    "description": "Descrição curta e impactante do App Two.",
+    "image": "https://via.placeholder.com/150?text=App+2"
+  },
+  {
+    "name": "App Three",
+    "description": "Descrição curta e impactante do App Three.",
+    "image": "https://via.placeholder.com/150?text=App+3"
+  }
+]

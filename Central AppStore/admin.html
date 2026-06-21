@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin – Central AppStore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-section { max-width: 1000px; margin: 2rem auto; background: var(--bg-card); padding: 2rem; border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { padding: .8rem; border: 1px solid var(--text-muted); text-align: left; }
+        th { background: rgba(255,255,255,0.05); }
+        .edit-btn { background: var(--accent); color: #fff; border: none; padding: .4rem .8rem; border-radius: 6px; cursor: pointer; }
+        .edit-btn:hover { background: var(--accent-hover); }
+        .save-section { margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Central AppStore – Admin</div>
+        <nav class="nav">
+            <a href="index.html" class="nav-item">Publicar</a>
+            <a href="admin.html" class="nav-item active">Admin</a>
+        </nav>
+    </header>
+    <main class="main">
+        <section class="admin-section">
+            <h2 class="section-title">Gerenciar Aplicativos</h2>
+            <table id="appsTable">
+                <thead>
+                    <tr><th>Nome</th><th>Descrição</th><th>Imagem URL</th><th>Ações</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="save-section">
+                <button id="addAppBtn" class="edit-btn">Adicionar App</button>
+                <button id="saveBtn" class="edit-btn" style="margin-left:1rem;">Salvar Alterações</button>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">© 2026 Central AppStore – Admin</footer>
+    <script>
+        const appsUrl = 'apps.json';
+        let apps = [];
+        const loadApps = async () => {
+            const resp = await fetch(appsUrl);
+            apps = await resp.json();
+            renderTable();
+        };
+        const renderTable = () => {
+            const tbody = document.querySelector('#appsTable tbody');
+            tbody.innerHTML = '';
+            apps.forEach((app, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input type="text" value="${app.name}" data-field="name" data-idx="${idx}"/></td>
+                    <td><textarea data-field="description" data-idx="${idx}">${app.description}</textarea></td>
+                    <td><input type="text" value="${app.image}" data-field="image" data-idx="${idx}"/></td>
+                    <td><button class="edit-btn" onclick="removeApp(${idx})">Remover</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        };
+        const removeApp = (i) => { apps.splice(i,1); renderTable(); };
+        document.getElementById('addAppBtn').addEventListener('click', () => {
+            apps.push({name:'Novo App', description:'Descrição', image:'https://via.placeholder.com/150'});
+            renderTable();
+        });
+        document.getElementById('saveBtn').addEventListener('click', async () => {
+            // Atualiza objeto apps a partir dos inputs
+            document.querySelectorAll('#appsTable tbody tr').forEach(tr => {
+                const idx = tr.querySelector('[data-idx]').dataset.idx;
+                apps[idx].name = tr.querySelector('[data-field="name"]').value;
+                apps[idx].description = tr.querySelector('[data-field="description"]').value;
+                apps[idx].image = tr.querySelector('[data-field="image"]').value;
+            });
+            // Envia via POST para PHP handler
+            await fetch('save_apps.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(apps)
+            });
+            alert('Alterações salvas. Atualize a página pública para ver as mudanças.');
+        });
+        loadApps();
+    </script>
+</body>
+</html>
